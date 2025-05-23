@@ -30,7 +30,10 @@ def create_simple_agent():
     """创建简单的文本分析智能体（原版本兼容）"""
     
     # 从环境变量获取配置
-    api_key = os.getenv("OPENAI_API_KEY", "sk-d62364dd57a94142a3233a7b759cbc37")
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("请设置 OPENAI_API_KEY 环境变量")
+        
     base_url = os.getenv("OPENAI_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
     model = os.getenv("OPENAI_MODEL", "qwen-plus")
     
