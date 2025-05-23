@@ -8,6 +8,9 @@
 import os
 import sys
 from typing import TypedDict, List
+import argparse
+import uvicorn
+from src.api.app import create_app
 
 # 添加src目录到Python路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
@@ -147,38 +150,18 @@ def start_api_server():
 
 
 def main():
-    """主函数"""
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "server":
-            start_api_server()
-        elif sys.argv[1] == "simple":
-            run_simple_example()
-        elif sys.argv[1] == "help":
-            print("使用方法:")
-            print("  python main.py simple   - 运行简单示例")
-            print("  python main.py server   - 启动API服务器")
-            print("  python main.py help     - 显示帮助信息")
-        else:
-            print(f"未知命令: {sys.argv[1]}")
-            print("使用 'python main.py help' 查看帮助")
+    parser = argparse.ArgumentParser(description="文本分析服务")
+    parser.add_argument("mode", choices=["simple", "server"], help="运行模式：simple 或 server")
+    parser.add_argument("--port", type=int, default=8000, help="服务器端口号（默认：8000）")
+    args = parser.parse_args()
+
+    if args.mode == "simple":
+        # 简单模式代码保持不变
+        run_simple_example()
     else:
-        # 默认行为：先尝试简单示例，然后提示用户
-        print("🤖 文本分析智能体")
-        print("=" * 30)
-        print("选择运行模式:")
-        print("1. 简单示例 (python main.py simple)")
-        print("2. API服务器 (python main.py server)")
-        print()
-        
-        choice = input("请选择 [1/2]: ").strip()
-        
-        if choice == "1":
-            run_simple_example()
-        elif choice == "2":
-            start_api_server()
-        else:
-            print("无效选择，运行简单示例...")
-            run_simple_example()
+        print("🚀 启动文本分析API服务器...")
+        app = create_app()
+        uvicorn.run(app, host="0.0.0.0", port=args.port)
 
 
 if __name__ == "__main__":

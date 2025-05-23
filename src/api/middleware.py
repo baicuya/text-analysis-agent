@@ -24,8 +24,10 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         
         # 记录请求信息
         logger.info(
-            f"Method: {request.method} Path: {request.url.path} "
-            f"Status: {response.status_code} Time: {process_time:.2f}s"
+            f"Method: {request.method} "
+            f"Path: {request.url.path} "
+            f"Status: {response.status_code} "
+            f"Time: {process_time:.2f}s"
         )
         
         return response

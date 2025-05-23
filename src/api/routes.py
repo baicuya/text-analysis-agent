@@ -1,28 +1,33 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import List, Optional
 from src.core.agent import TextAnalysisAgent
-from src.core.models import TextAnalysisRequest, TextAnalysisResponse, HealthResponse
 
 router = APIRouter()
-agent = TextAnalysisAgent()
 
+class TextAnalysisRequest(BaseModel):
+    text: str
+    include_classification: bool = True
+    include_entities: bool = True
+    include_summary: bool = True
+    language: str = "zh"
+
+class TextAnalysisResponse(BaseModel):
+    classification: Optional[str] = None
+    entities: Optional[List[str]] = None
+    summary: Optional[str] = None
+
+@router.get("/health")
+async def health_check():
+    """健康检查端点"""
+    return {"status": "healthy"}
 
 @router.post("/analyze", response_model=TextAnalysisResponse)
-async def analyze_text(request: TextAnalysisRequest) -> TextAnalysisResponse:
-    """分析文本"""
+async def analyze_text(request: TextAnalysisRequest):
+    """文本分析端点"""
     try:
-        return agent.analyze(request)
+        agent = TextAnalysisAgent()
+        result = agent.analyze(request)
+        return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/health", response_model=HealthResponse)
-async def health_check() -> HealthResponse:
-    """健康检查"""
-    return HealthResponse(
-        status="healthy",
-        version="1.0.0",
-        dependencies={
-            "openai": "connected",
-            "database": "connected"
-        }
-    ) 
+        raise HTTPException(status_code=500, detail=str(e)) 
