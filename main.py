@@ -16,7 +16,8 @@ from langgraph.graph import StateGraph, END
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.schema import HumanMessage
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # 兼容原版本的State定义
 class State(TypedDict):
@@ -48,7 +49,7 @@ def create_simple_agent():
         """文本分类节点"""
         prompt = PromptTemplate(
             input_variables=["text"],
-            template="将以下文本分类到以下类别之一：新闻、博客、研究、其他。\n\n文本：{text}\n\n类别："
+            template="将以下文本分类到以下类别之一：新闻、博客、研究、其他。\n\n文本：{text}\n\n类别：（只输出类别本身，不要理由）"
         )
         message = HumanMessage(content=prompt.format(text=state["text"]))
         classification = llm.invoke([message]).content.strip()
