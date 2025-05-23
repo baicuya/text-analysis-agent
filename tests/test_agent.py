@@ -3,11 +3,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()  # 确保测试时也加载环境变量
 
-# 直接设置环境变量
-os.environ["OPENAI_API_KEY"] = "sk-d62364dd57a94142a3233a7b759cbc37"
-os.environ["OPENAI_BASE_URL"] = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-os.environ["OPENAI_MODEL"] = "qwen-plus"
-
 # 打印环境变量
 print("\n=== 环境变量 ===")
 print("API KEY:", os.getenv("OPENAI_API_KEY"))
