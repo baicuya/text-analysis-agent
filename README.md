@@ -1,6 +1,56 @@
-# 文本分析智能体 (Text Analysis Agent)
+# 文本分析智能体
 
-一个基于LangGraph和FastAPI的智能文本分析系统，支持文本分类、实体提取和摘要生成。
+## 项目介绍
+本项目是一个文本分析智能体，可以对文本进行分类、实体提取和摘要生成。支持 FastAPI 服务和简单命令行模式。
+
+## 安装步骤
+1. 克隆项目
+   ```bash
+   git clone https://github.com/baicuya/text-analysis-agent.git
+   cd text-analysis-agent
+   ```
+
+2. 创建并激活 conda 环境
+   ```bash
+   conda create -n my_agent python=3.11
+   conda activate my_agent
+   ```
+
+3. 安装依赖
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. 配置环境变量
+   - 复制 `.env.example` 为 `.env`
+   - 在 `.env` 中设置 `OPENAI_API_KEY`、`OPENAI_BASE_URL` 和 `OPENAI_MODEL`
+
+## 使用方法
+### 简单模式
+运行简单示例：
+```bash
+python main.py simple
+```
+
+### API 服务
+启动 FastAPI 服务：
+```bash
+python main.py server
+```
+服务默认运行在 `http://0.0.0.0:8000`，可以通过环境变量 `APP_HOST` 和 `APP_PORT` 修改。
+
+## 测试方法
+运行测试：
+```bash
+python -m pytest -v
+```
+
+## 项目结构
+- `src/core/agent.py`: 文本分析智能体核心逻辑
+- `src/core/models.py`: 数据模型定义
+- `src/api/routes.py`: FastAPI 路由定义
+- `tests/`: 测试文件
+- `main.py`: 入口文件，支持简单模式和 API 服务
 
 ## ✨ 功能特性
 
