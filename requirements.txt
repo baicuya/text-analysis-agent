@@ -1,1 +1,17 @@
- 
+# 核心依赖
+langchain>=0.1.0
+langchain-openai>=0.0.2
+langgraph>=0.0.10
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-dotenv>=1.0.0
+pydantic>=2.4.2
+pydantic-settings>=2.0.3
+
+# 测试依赖
+pytest>=7.4.3
+pytest-cov>=4.1.0
+httpx>=0.25.0  # 用于 FastAPI 测试客户端
+
+# 监控依赖
+prometheus-client>=0.17.1 
